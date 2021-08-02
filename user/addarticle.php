@@ -15,11 +15,10 @@ if(isset($_POST['addarticle-btn'])){
     {
           if($_FILES['image_article']['size'] < 1000000 )
           {
+            //   echo '<pre>', print_r($_FILES, true) ,'</pre>';
               $liste_extensions = array('png', 'jpg', 'jpeg', 'gif');
               $details = pathinfo($_FILES['image_article']['name']);
-            //   echo "<pre>";
-            //   var_dump($details);
-            //   echo "</pre>";
+           
               $extension = $details['extension'];
               $resultat = in_array($extension, $liste_extensions); 
               if($resultat == true)
@@ -33,10 +32,10 @@ if(isset($_POST['addarticle-btn'])){
     try{
         $requete=$base->prepare("INSERT INTO articles(titre,descriptionn,contenu,image_article,id_user,id_categorie) values(?,?,?,?,?,?)");
         $result=$requete->execute(array($titre,$description,$content,$chemin,$_SESSION['id_user'],$categorie));
-
-        // if($requete->rowCount() == 1){
-        //     $result= header('Location:index3.html');
-        // }
+        
+        if($requete->rowCount() == 1){
+            $result= header('Location:listarticles.php');
+        }
     }
     catch(Exception $e){
         echo "La creation de catégorie échouée";
@@ -66,7 +65,7 @@ $requete2->execute(array());
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style3.css">
+    <link rel="stylesheet" href="../css/stylex.css">
 
 
 
@@ -82,10 +81,15 @@ $requete2->execute(array());
     </div>
     <div class="side-nav">
         <div class="logo">
-            <span>Dashboard</span>
+            <span>GG Zone</span>
         </div>
         <nav>
             <ul>
+                <li>
+                    <a href="#">
+                        <span><a href="../HTML/home.php">Home</a></span>
+                    </a>
+                </li>
                 <li>
                     <a href="#">
                         <span><a href="profile.php">Profile</a></span>
@@ -129,7 +133,7 @@ $requete2->execute(array());
                 <br>
 
                 <label for="file-upload" class="custom-file-upload">
-                    <i class="fa fa-cloud-upload"></i> Custom Upload
+                    <i class="fa fa-cloud-upload"></i> Upload image
                 </label>
                 <input id="file-upload" type="file" name="image_article">
                 <br>

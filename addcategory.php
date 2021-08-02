@@ -12,7 +12,7 @@ if(isset($_POST['addcategory-btn'])){
         $result=$requete->execute(array(':newcategory'=>$newcategory));
 
         if($requete->rowCount() == 1){
-            $result= header('Location:index2.html');
+            $result= header('Location:index2.php');
         }
     }
     catch(Exception $e){
@@ -22,5 +22,3 @@ if(isset($_POST['addcategory-btn'])){
     
 
     ?>
-
-    

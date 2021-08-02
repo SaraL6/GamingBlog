@@ -7,17 +7,52 @@ if(isset($_POST['editarticle-btn'])){
 	$titre=$_POST['titre'];
     $description=$_POST['descriptionn'];
     $categorie=$_POST['categorie'];
-	$image=$_POST['image_article'];
 	$id_article = $_POST["id_article"];
-	
+    $chemin = '' ;
+    
+   
+
+    // echo '<pre>', print_r($_FILES, true) ,'</pre>';
+    if(isset($_FILES['image_article'])   and $_FILES['image_article']['error'] == 0)
+    {   
+          if($_FILES['image_article']['size'] < 1000000 )
+          {
+       
+              $liste_extensions = array('png', 'jpg', 'jpeg', 'gif');
+              $details = pathinfo($_FILES['image_article']['name']);
+              echo "<pre>";
+              var_dump($details);
+              echo "</pre>";
+              $extension = $details['extension'];
+              $resultat = in_array($extension, $liste_extensions); 
+              if($resultat == true)
+              {
+                  move_uploaded_file($_FILES['image_article']['tmp_name'], '../img/'.$details['basename']);
+                  $chemin = '../img/'.$details['basename'] ;    
+              }
+          }
+    }
+
+    try{
     $requete=$base->prepare("UPDATE articles SET titre=?, descriptionn=?, contenu=?, image_article=?, id_user=?, id_categorie=? WHERE id_article=?");
-    $resultat=$requete->execute(array( $titre, $description, $content, $image, $_SESSION['id_user'], $categorie, $id_article));
-	header('Location:listarticles.php');
+    $resultat=$requete->execute(array( $titre, $description, $content, $chemin, $_SESSION['id_user'], $categorie, $id_article));
+    // echo '<pre> update : ', print_r($chemin) ,'</pre>';
+
+    header('Location:listarticles.php');
+    }
+    catch(Exception $e){
+    echo "La creation de catégorie échouée";
+        }
 
 }
 
 $requete2=$base->prepare("SELECT * FROM categories");
 $requete2->execute(array());
+
+$requete3=$base->prepare("SELECT * FROM articles Where id_article=?");
+$requete3->execute(array($_GET['id_article']));
+$ligne2=$requete3->fetch();
+
 ?>
 
 
@@ -36,7 +71,7 @@ $requete2->execute(array());
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style3.css">
+    <link rel="stylesheet" href="../css/stylex.css">
 
 
 
@@ -52,10 +87,15 @@ $requete2->execute(array());
     </div>
     <div class="side-nav">
         <div class="logo">
-            <span>Dashboard</span>
+            <span>GG Zone</span>
         </div>
         <nav>
             <ul>
+                <li>
+                    <a href="#">
+                        <span><a href="../HTML/home.php">Home</a></span>
+                    </a>
+                </li>
                 <li>
                     <a href="#">
                         <span>Profile</span>
@@ -82,14 +122,15 @@ $requete2->execute(array());
             Edit an article
         </div>
         <div class="content">
-            <form action="editarticle.php" method="POST">
+            <!-- must have enctype="multipart/form-data" to get the file with $_FILES -->
+            <form action="editarticle.php" method="POST" enctype="multipart/form-data">
                 <label for="">Titre</label>
-                <input type="text" name="titre" class="inputarea" value="<?php  echo $_GET["titre"] ?>">
-                <input type="hidden" name="id_article" class="inputarea" value="<?php  echo $_GET["id_article"] ?>">
+                <input type="text" name="titre" class="inputarea" value="<?php  echo $ligne2["titre"] ?>">
+                <input type="hidden" name="id_article" class="inputarea" value="<?php  echo $ligne2["id_article"] ?>">
                 <br>
                 <label for="">Description</label>
                 <input type="text" name="descriptionn" class="inputarea2"
-                    value="<?php  echo $_GET["descriptionn"] ?>"><br>
+                    value="<?php  echo $ligne2["descriptionn"] ?>"><br>
                 <br>
                 <label for="">Categorie</label>
                 <select name="categorie" id="">
@@ -106,7 +147,7 @@ $requete2->execute(array());
                 <input id="file-upload" type="file" name="image_article">
                 <br>
                 <label for="">content</label>
-                <textarea name="editor" id="editor" value="<?php  echo $_GET["contenu"] ?>"></textarea>
+                <textarea name="editor" id="editor"><?php echo $ligne2['contenu']; ?></textarea>
                 <br>
                 <input type="submit" name="editarticle-btn" class="btn" value="Edit"><br>
             </form>

@@ -33,7 +33,7 @@ $reponse=$resultat->execute(array($_SESSION['id_user']));
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style3.css">
+    <link rel="stylesheet" href="../css/stylex.css">
 
 
 
@@ -43,16 +43,21 @@ $reponse=$resultat->execute(array($_SESSION['id_user']));
     <div class="header">
         <div class="logo">
             <i class="fa fa-tachometer"></i>
-            <span>Brand</span>
+            <span>GG Zone</span>
         </div>
         <a href="#" class="nav-trigger"><span></span></a>
     </div>
     <div class="side-nav">
         <div class="logo">
-            <span>Dashboard</span>
+            <span>GG Zone</span>
         </div>
         <nav>
             <ul>
+                <li>
+                    <a href="#">
+                        <span><a href="../HTML/home.php">Home</a></span>
+                    </a>
+                </li>
                 <li>
                     <a href="#">
                         <span><a href="profile.php">Profile</a></span>
@@ -82,7 +87,7 @@ $reponse=$resultat->execute(array($_SESSION['id_user']));
             <table>
                 <thead>
                     <tr>
-                        <th>Article Id</th>
+
                         <th>Article</th>
                         <th>image</th>
                         <th>Edit</th>
@@ -93,12 +98,11 @@ $reponse=$resultat->execute(array($_SESSION['id_user']));
                     <?php   while ($ligne=$resultat->fetch()) { ?>
                     <tr>
 
-                        <td name="id_article"> <?php  echo  $ligne["id_article"] ?></td>
+
                         <td name="titre"><?php  echo  $ligne["titre"] ?></td>
                         <td name="image_article"><img src="<?php  echo  $ligne["image_article"] ?>" alt=""
                                 style="width:50px;height:50px;"></td>
-                        <td> <a
-                                href="editarticle.php?id_article=<?php  echo  $ligne["id_article"] ?>&titre=<?php  echo  $ligne["titre"] ?>&descriptionn=<?php  echo  $ligne["descriptionn"] ?>&contenu=<?php  echo  $ligne["contenu"] ?>">Edit</a>
+                        <td> <a href="editarticle.php?id_article=<?php  echo  $ligne["id_article"] ?>">Edit</a>
                         </td>
                         <td> <a href="listarticles.php?id_article=<?php  echo  $ligne["id_article"] ?>">Delete</a></td>
                     </tr>
