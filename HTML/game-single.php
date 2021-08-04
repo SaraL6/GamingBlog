@@ -2,6 +2,7 @@
 require_once '../source/db_connect.php';
 include_once '../source/session.php';
 
+$id_article="";
   
 $requete=$base->prepare("SELECT * FROM categories");
 $requete->execute(array());
@@ -9,6 +10,7 @@ $requete->execute(array());
 $resultat2=$base->prepare("SELECT articles.titre,articles.image_article,articles.descriptionn,articles.date_creation,articles.contenu,articles.id_article,categories.intitule_categorie From articles,categories where articles.id_categorie = categories.id_categorie AND id_article=?");
 $resultat2->execute(array($_GET['id_article']));
 $article = $resultat2->fetch();
+echo '<pre>', print_r($article, true) ,'</pre>';
 // echo "<pre>";
 // 	var_dump($article);
 // 	echo "</pre>";
@@ -86,23 +88,36 @@ $article = $resultat2->fetch();
                 </a>
                 <nav class="top-nav-area w-100">
                     <div class="user-panel">
-                    <?php if(isset($_SESSION['username'])) { ?>
-                        <a href="../user/profile.php"><?php echo $_SESSION['username']?>
-                        
-                        <?php }else{ ?>
+                        <?php if(isset($_SESSION['username'])) { ?>
+                        <a href="../user/profile.php"><?php echo $_SESSION['username']?><a href=""></a>
+
+                            <?php }else{ ?>
                             <a href="../index.php">Login</a> / <a href="../index.php">Register</a>
-                        <?php } ?>                    </div>
+                            <?php } ?>
+                    </div>
                     <!-- Menu -->
                     <ul class="main-menu primary-menu">
                         <li><a href="home.php">Home</a></li>
-                        <li><a href="games.php">Categories</a>
+                        <li>
+                            <a href="games.php">Games</a>
                             <ul class="sub-menu">
-                                <li><a href="game-single.php">Blog post</a></li>
+                                <?php   while ($ligne=$requete->fetch()) { ?>
+
+                                <li><a href="game-single.php"> <?php echo $ligne['intitule_categorie'] ?></a>
+
+                                </li>
+
+                                <?php  } ?>
+
                             </ul>
                         </li>
                         <li><a href="about.php">About</a></li>
                         <li><a href="blog.php">Blog</a></li>
                         <li><a href="contact.php">Contact</a></li>
+                        <?php if(isset($_SESSION['username'])) { ?>
+
+                        <li><a href="../user/profile.php">Dashboard</a></li>
+                        <?php } ?>
                     </ul>
                 </nav>
             </div>
@@ -209,11 +224,11 @@ $article = $resultat2->fetch();
     <section class="contact-page">
         <div class="container">
             <?php if(isset($_SESSION['username'])) { ?>
-                <h3 style="color:white">Comments</h3>
+            <h3 style="color:white">Comments</h3>
             <form method="POST" id="comment_form">
                 <div class="form-group">
-                <br>
-                <br>
+                    <br>
+                    <br>
                     <input type="hidden" name="comment_name" id="comment_name" class="form-control"
                         value="<?php echo $_SESSION['username'] ?>" />
                 </div>
@@ -222,7 +237,7 @@ $article = $resultat2->fetch();
                         placeholder="Enter Comment" rows="5"></textarea>
                 </div>
                 <div class="form-group">
-                <!-- value 0 means no parent comment, value=value of the parent comment(comment_id) -->
+                    <!-- value 0 means no parent comment, value=value of the parent comment(comment_id) -->
                     <input type="hidden" name="comment_id" id="comment_id" value="0" />
                     <input type="submit" name="submit" id="submit" class="btn btn-info" value="Submit" />
                 </div>
@@ -237,17 +252,6 @@ $article = $resultat2->fetch();
     <!-- comment section end -->
 
 
-    <!-- Newsletter section -->
-    <section class="newsletter-section">
-        <div class="container">
-            <h2>Subscribe to our newsletter</h2>
-            <form class="newsletter-form">
-                <input type="text" placeholder="ENTER YOUR E-MAIL">
-                <button class="site-btn">subscribe <img src="img/icons/double-arrow.png" alt="#" /></button>
-            </form>
-        </div>
-    </section>
-    <!-- Newsletter section end -->
 
 
     <!-- Footer section -->
@@ -300,9 +304,9 @@ $article = $resultat2->fetch();
 // wait for the document to be loaded
 $(document).ready(function() {
 
-// when you click submit btn of comment_form apply function
+    // when you click submit btn of comment_form apply function
     $('#comment_form').on('submit', function(event) {
-        
+
         // prevent the submit btn from refreshing
         event.preventDefault();
 
@@ -318,15 +322,17 @@ $(document).ready(function() {
             dataType: "JSON",
             // once the code in  add_comment.php is executed:
             success: function(data) {
-                console.log({data})
+                console.log({
+                    data
+                })
                 // accessing error that's inside data 
                 // != opposite of ==
                 if (data.error != '') {
                     // select the form inside the jquery selector,at its index and we reset the form
                     $('#comment_form')[0].reset();
-                // takes the error from add_comment and puts it in the html of comment_message(comment_message was an empty span)
+                    // takes the error from add_comment and puts it in the html of comment_message(comment_message was an empty span)
                     $('#comment_message').html(data.error);
-                // we set the value of the hidden input back to 0
+                    // we set the value of the hidden input back to 0
                     $('#comment_id').val('0');
                     load_comment();
                 }

@@ -71,7 +71,7 @@ $ligne2=$requete3->fetch();
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/stylex.css">
+    <link rel="stylesheet" href="../css/stylex.css?v=<?php echo time(); ?>">
 
 
 
@@ -110,7 +110,7 @@ $ligne2=$requete3->fetch();
 
                 <li>
                     <a href="listarticles.php">
-                        <span>Liste of articles</span>
+                        <span>My articles</span>
                     </a>
                 </li>
 
