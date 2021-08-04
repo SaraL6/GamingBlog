@@ -33,7 +33,7 @@ $reponse=$resultat->execute(array($_SESSION['id_user']));
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/stylex.css">
+    <link rel="stylesheet" href="../css/stylex.css?v=<?php echo time(); ?>">
 
 
 
@@ -72,7 +72,7 @@ $reponse=$resultat->execute(array($_SESSION['id_user']));
 
                 <li>
                     <a href="#">
-                        <span><a href="listarticles.php"> Liste of articles</a></span>
+                        <span><a href="listarticles.php"> My articles</a></span>
                     </a>
                 </li>
 
@@ -89,7 +89,9 @@ $reponse=$resultat->execute(array($_SESSION['id_user']));
                     <tr>
 
                         <th>Article</th>
-                        <th>image</th>
+                        <th>Image</th>
+                        <th>Description</th>
+
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -101,7 +103,9 @@ $reponse=$resultat->execute(array($_SESSION['id_user']));
 
                         <td name="titre"><?php  echo  $ligne["titre"] ?></td>
                         <td name="image_article"><img src="<?php  echo  $ligne["image_article"] ?>" alt=""
-                                style="width:50px;height:50px;"></td>
+                                class="image_article" style=" width:150px; object-fit: cover;"></td>
+                        <td name="descriptionn"><?php  echo  $ligne["descriptionn"] ?></td>
+
                         <td> <a href="editarticle.php?id_article=<?php  echo  $ligne["id_article"] ?>">Edit</a>
                         </td>
                         <td> <a href="listarticles.php?id_article=<?php  echo  $ligne["id_article"] ?>">Delete</a></td>

@@ -82,22 +82,27 @@ $response2=$resultat2->execute(array());
                 </a>
                 <nav class="top-nav-area w-100">
                     <div class="user-panel">
-                    <?php if(isset($_SESSION['username'])) { ?>
-                        <a href="../user/profile.php"><?php echo $_SESSION['username']?>
-                        
-                        <?php }else{ ?>
+                        <?php if(isset($_SESSION['username'])) { ?>
+                        <a href="../user/profile.php"><?php echo $_SESSION['username']?><a href=""></a>
+
+                            <?php }else{ ?>
                             <a href="../index.php">Login</a> / <a href="../index.php">Register</a>
-                        <?php } ?>
-
-                        
-
+                            <?php } ?>
                     </div>
                     <!-- Menu -->
                     <ul class="main-menu primary-menu">
                         <li><a href="home.php">Home</a></li>
-                        <li><a href="games.php">Categories</a>
+                        <li>
+                            <a href="games.php">Games</a>
                             <ul class="sub-menu">
-                                <li><a href="game-single.php">Blog post</a></li>
+                                <?php   while ($ligne=$requete->fetch()) { ?>
+
+                                <li><a href="game-single.php"> <?php echo $ligne['intitule_categorie'] ?></a>
+
+                                </li>
+
+                                <?php  } ?>
+
                             </ul>
                         </li>
                         <li><a href="about.php">About</a></li>
@@ -105,9 +110,8 @@ $response2=$resultat2->execute(array());
                         <li><a href="contact.php">Contact</a></li>
                         <?php if(isset($_SESSION['username'])) { ?>
 
-                            <li><a href="../user/profile.php">Dashboard</a></li>
+                        <li><a href="../user/profile.php">Dashboard</a></li>
                         <?php } ?>
-
                     </ul>
                 </nav>
             </div>
@@ -175,50 +179,10 @@ $response2=$resultat2->execute(array());
                         <div class="widget-item">
                             <form class="search-widget" method="POST">
                                 <input type="text" name="search">
-                                <button>  search</button>
+                                <button> search</button>
                             </form>
                         </div>
-                        <div class="widget-item">
-                            <h4 class="widget-title">Trending</h4>
-                            <div class="trending-widget">
-                                <div class="tw-item">
-                                    <div class="tw-thumb">
-                                        <img src="./img/blog-widget/1.jpg" alt="#">
-                                    </div>
-                                    <div class="tw-text">
-                                        <div class="tw-meta">11.11.18 / in <a href="">Games</a></div>
-                                        <h5>The best online game is out now!</h5>
-                                    </div>
-                                </div>
-                                <div class="tw-item">
-                                    <div class="tw-thumb">
-                                        <img src="./img/blog-widget/2.jpg" alt="#">
-                                    </div>
-                                    <div class="tw-text">
-                                        <div class="tw-meta">11.11.18 / in <a href="">Games</a></div>
-                                        <h5>The best online game is out now!</h5>
-                                    </div>
-                                </div>
-                                <div class="tw-item">
-                                    <div class="tw-thumb">
-                                        <img src="./img/blog-widget/3.jpg" alt="#">
-                                    </div>
-                                    <div class="tw-text">
-                                        <div class="tw-meta">11.11.18 / in <a href="">Games</a></div>
-                                        <h5>The best online game is out now!</h5>
-                                    </div>
-                                </div>
-                                <div class="tw-item">
-                                    <div class="tw-thumb">
-                                        <img src="./img/blog-widget/4.jpg" alt="#">
-                                    </div>
-                                    <div class="tw-text">
-                                        <div class="tw-meta">11.11.18 / in <a href="">Games</a></div>
-                                        <h5>The best online game is out now!</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="widget-item">
                             <div class="categories-widget">
                                 <h4 class="widget-title">categories</h4>
@@ -233,31 +197,7 @@ $response2=$resultat2->execute(array());
                                 </ul>
                             </div>
                         </div>
-                        <div class="widget-item">
-                            <h4 class="widget-title">Latest Comments</h4>
-                            <div class="latest-comments">
-                                <div class="lc-item">
-                                    <img src="./img/blog-widget/1.jpg" class="lc-avatar" alt="#">
-                                    <div class="tw-text"><a href="">Maria Smith</a> <span>On</span> The best online game
-                                        out there </div>
-                                </div>
-                                <div class="lc-item">
-                                    <img src="./img/blog-widget/2.jpg" class="lc-avatar" alt="#">
-                                    <div class="tw-text"><a href="">Maria Smith</a> <span>On</span> The best online game
-                                        out there </div>
-                                </div>
-                                <div class="lc-item">
-                                    <img src="./img/blog-widget/3.jpg" class="lc-avatar" alt="#">
-                                    <div class="tw-text"><a href="">Maria Smith</a> <span>On</span> The best online game
-                                        out there </div>
-                                </div>
-                                <div class="lc-item">
-                                    <img src="./img/blog-widget/4.jpg" class="lc-avatar" alt="#">
-                                    <div class="tw-text"><a href="">Maria Smith</a> <span>On</span> The best online game
-                                        out there </div>
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="widget-item">
                             <a href="#" class="add">
                                 <img src="./img/add.jpg" alt="">
@@ -271,17 +211,6 @@ $response2=$resultat2->execute(array());
     <!-- Blog page end-->
 
 
-    <!-- Newsletter section -->
-    <section class="newsletter-section">
-        <div class="container">
-            <h2>Subscribe to our newsletter</h2>
-            <form class="newsletter-form">
-                <input type="text" placeholder="ENTER YOUR E-MAIL">
-                <button class="site-btn">subscribe <img src="img/icons/double-arrow.png" alt="#" /></button>
-            </form>
-        </div>
-    </section>
-    <!-- Newsletter section end -->
 
 
     <!-- Footer section -->

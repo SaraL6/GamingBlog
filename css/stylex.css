@@ -29,9 +29,8 @@ body {
 }
 .side-nav .logo {
   color: #fff;
-  
-  background:transparent;
 
+  background: transparent;
 }
 .header .logo {
   float: left;
@@ -98,7 +97,6 @@ span:after {
   height: 800px;
   background-image: url(../img/zane-lee-IHj0xtWtLKE-unsplash.jpg);
 
-
   z-index: 1;
   display: none;
 }
@@ -162,12 +160,16 @@ span:after {
   color: white;
   font-size: 30px;
   text-align: center;
-  background:transparent;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  background: transparent;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+td .image_article {
+  object-fit: cover;
 }
 .main-content .content {
   padding: 20px;
-  width: 50%;
   text-align: center;
   margin: auto;
 }
@@ -183,7 +185,7 @@ input {
   background: black;
   color: white;
   border: none;
-  font-size:x-large
+  font-size: x-large;
 }
 
 .btn:hover {
@@ -198,7 +200,7 @@ input {
   padding: 5px;
   padding-left: 100px;
   padding-right: 100px;
-  background:black;
+  background: black;
   opacity: 0.75;
   color: white;
   transition: box-shadow 0.5s;
@@ -211,7 +213,7 @@ input {
   padding-left: 100px;
   padding-right: 100px;
   margin-right: 40px;
-  background:black;
+  background: black;
   opacity: 0.75;
   transition: box-shadow 0.5s;
   outline: none;
@@ -251,7 +253,7 @@ input[type="file"] {
   outline: none;
   border-radius: 5px;
   color: white;
-  background:black;
+  background: black;
   opacity: 1;
   border: #2a0845 1px solid;
   font-size: larger;
@@ -278,8 +280,7 @@ table {
   font-size: larger;
   padding: 20px;
   margin: 20px;
- background: darkslateblue;  /* fallback for old browsers */
- 
+  background: darkslateblue; /* fallback for old browsers */
 }
 
 thead {
@@ -305,7 +306,6 @@ th {
   opacity: 1;
 }
 td {
-
   border: solid 1px black;
   padding: 20px;
   margin: 20px;
@@ -335,7 +335,6 @@ table a {
     background-position: top;
     background-size: cover;
 
-
     z-index: 1;
   }
   .header .logo {
@@ -359,8 +358,6 @@ table a {
     background-repeat: no-repeat;
     background-position: center;
     position: fixed;
-
-
   }
   .side-nav ul li span:nth-child(2) {
     display: none;
