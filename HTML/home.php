@@ -7,7 +7,9 @@ $requete=$base->prepare("SELECT * FROM categories");
 $requete->execute(array());
 
 $resultat2=$base->prepare("SELECT articles.id_article,articles.titre,articles.image_article,articles.descriptionn,articles.date_creation,categories.intitule_categorie From articles,categories where articles.id_categorie = categories.id_categorie ");
-$response2=$resultat2->execute(array());
+$resultat2->execute(array());
+$article = $resultat2->fetch();
+echo '<pre>', print_r($article, true) ,'</pre>';
 
 
 
@@ -87,7 +89,8 @@ $response2=$resultat2->execute(array());
                             <ul class="sub-menu">
                                 <?php   while ($ligne=$requete->fetch()) { ?>
 
-                                <li><a href="game-single.php"> <?php echo $ligne['intitule_categorie'] ?></a>
+                                <li><a href="game-single.php?id_categorie=<?php  echo  $ligne["id_categorie"] ?>">
+                                        <?php echo $ligne['intitule_categorie'] ?></a>
 
                                 </li>
 

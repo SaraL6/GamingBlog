@@ -2,15 +2,19 @@
 require_once '../source/db_connect.php';
 include_once '../source/session.php';
 
-$id_article="";
+
   
 $requete=$base->prepare("SELECT * FROM categories");
 $requete->execute(array());
+$categories= $requete->fetch();
 
-$resultat2=$base->prepare("SELECT articles.titre,articles.image_article,articles.descriptionn,articles.date_creation,articles.contenu,articles.id_article,categories.intitule_categorie From articles,categories where articles.id_categorie = categories.id_categorie AND id_article=?");
-$resultat2->execute(array($_GET['id_article']));
+// $resultat2=$base->prepare("SELECT * From articles AND categories Where articles.id_categorie AND categories.id_categorie=?");
+
+$resultat2=$base->prepare("SELECT * From articles  Where articles.id_categorie=? ");
+$resultat2->execute(array($_GET['id_categorie']));
 $article = $resultat2->fetch();
-echo '<pre>', print_r($article, true) ,'</pre>';
+
+ echo '<pre>tehtr', print_r($article, true) ,'</pre>';
 // echo "<pre>";
 // 	var_dump($article);
 // 	echo "</pre>";
@@ -147,7 +151,7 @@ echo '<pre>', print_r($article, true) ,'</pre>';
         <div class="container">
             <div class="game-single-preview">
 
-                <img src="<?php  echo  $article["image_article"] ?>" alt="" name=" image_article" class="w-100 h-75">
+                <img src="<?php  echo $article["image_article"] ?>" alt="" name=" image_article" class="w-100 h-75">
 
             </div>
             <div class="row">
@@ -156,11 +160,11 @@ echo '<pre>', print_r($article, true) ,'</pre>';
                     <div class="gs-meta">
 
                         <?php  echo  $article["date_creation"] ?>/ in
-                        <a href=""><?php  echo  $article["intitule_categorie"] ?></a>
+                        <a href=""><?php  echo $article["intitule_categorie"] ?></a>
                     </div>
-                    <h2 class="gs-title"><?php  echo  $article["titre"] ?></h2>
-                    <h4><?php  echo  $article["descriptionn"] ?></h4>
-                    <p><?php  echo  $article["contenu"] ?></p>
+                    <h2 class="gs-title"><?php  echo $article["titre"] ?></h2>
+                    <h4><?php  echo $article["descriptionn"] ?></h4>
+                    <p><?php  echo $article["contenu"] ?></p>
                     <div class="geme-social-share pt-5 d-flex">
                         <p>Share:</p>
                         <a href="#"><i class="fa fa-pinterest"></i></a>
@@ -172,36 +176,6 @@ echo '<pre>', print_r($article, true) ,'</pre>';
                 </div>
 
 
-                <div class="col-xl-3 col-lg-4 col-md-5 sidebar game-page-sideber">
-                    <div id="stickySidebar">
-                        <div class="widget-item">
-                            <div class="rating-widget">
-                                <h4 class="widget-title">Ratings</h4>
-                                <ul>
-                                    <li>Price<span>3.5/5</span></li>
-                                    <li>Graphics<span>4.5/5</span></li>
-                                    <li>Levels<span>3.5/5</span></li>
-                                    <li>Levels<span>4.5/5</span></li>
-                                    <li>Dificulty<span>4.5/5</span></li>
-                                </ul>
-                                <div class="rating">
-                                    <h5><i>Rating</i><span>4.5</span> / 5</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="widget-item">
-                            <div class="testimonials-widget">
-                                <h4 class="widget-title">Testimonials</h4>
-                                <div class="testim-text">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                        incididunt ut labore et dolo re magna aliqua. Quis ipsum suspend isse ultrices.
-                                    </p>
-                                    <h6><span>James Smith,</span>Gamer</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
