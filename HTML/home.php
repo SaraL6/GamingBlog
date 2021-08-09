@@ -2,14 +2,13 @@
 require_once '../source/db_connect.php';
 include_once '../source/session.php';
 
- 
 $requete=$base->prepare("SELECT * FROM categories");
 $requete->execute(array());
 
-$resultat2=$base->prepare("SELECT articles.id_article,articles.titre,articles.image_article,articles.descriptionn,articles.date_creation,categories.intitule_categorie From articles,categories where articles.id_categorie = categories.id_categorie ");
+$resultat2=$base->prepare("SELECT * From articles  JOIN categories on articles.id_categorie = categories.id_categorie  Where articles.id_categorie=? ");
 $resultat2->execute(array());
 $article = $resultat2->fetch();
-echo '<pre>', print_r($article, true) ,'</pre>';
+// echo '<pre>', print_r($article, true) ,'</pre>';
 
 
 
@@ -72,7 +71,7 @@ echo '<pre>', print_r($article, true) ,'</pre>';
                 <a href="home.html" class="site-logo">
                     <img src="./img/logo.png" alt="" />
                 </a>
-                <nav class="top-nav-area w-100">
+                <nav class="top-nav-area w-100 ">
                     <div class="user-panel">
                         <?php if(isset($_SESSION['username'])) { ?>
                         <a href="../user/profile.php"><?php echo $_SESSION['username']?><a href=""></a>

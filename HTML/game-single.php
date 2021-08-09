@@ -3,18 +3,16 @@ require_once '../source/db_connect.php';
 include_once '../source/session.php';
 
 
-  
 $requete=$base->prepare("SELECT * FROM categories");
 $requete->execute(array());
-$categories= $requete->fetch();
 
 // $resultat2=$base->prepare("SELECT * From articles AND categories Where articles.id_categorie AND categories.id_categorie=?");
 
-$resultat2=$base->prepare("SELECT * From articles  Where articles.id_categorie=? ");
+$resultat2=$base->prepare("SELECT * From articles  JOIN categories on articles.id_categorie = categories.id_categorie  Where articles.id_categorie=? ");
 $resultat2->execute(array($_GET['id_categorie']));
 $article = $resultat2->fetch();
 
- echo '<pre>tehtr', print_r($article, true) ,'</pre>';
+//  echo '<pre>tehtr', print_r($article, true) ,'</pre>';
 // echo "<pre>";
 // 	var_dump($article);
 // 	echo "</pre>";
@@ -87,7 +85,7 @@ $article = $resultat2->fetch();
             </div>
             <div class="header-bar-warp d-flex">
                 <!-- site logo -->
-                <a href="home.html" class="site-logo">
+                <a href=" home.html" class="site-logo">
                     <img src="./img/logo.png" alt="">
                 </a>
                 <nav class="top-nav-area w-100">
@@ -107,12 +105,12 @@ $article = $resultat2->fetch();
                             <ul class="sub-menu">
                                 <?php   while ($ligne=$requete->fetch()) { ?>
 
-                                <li><a href="game-single.php"> <?php echo $ligne['intitule_categorie'] ?></a>
+                                <li><a href="game-single.php?id_categorie=<?php  echo  $ligne["id_categorie"] ?>">
+                                        <?php echo $ligne['intitule_categorie'] ?></a>
 
                                 </li>
 
                                 <?php  } ?>
-
                             </ul>
                         </li>
                         <li><a href="about.php">About</a></li>
