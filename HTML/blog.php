@@ -6,8 +6,9 @@ include_once '../source/session.php';
 $requete=$base->prepare("SELECT * FROM categories");
 $requete->execute(array());
 
-$resultat2=$base->prepare("SELECT articles.id_article,articles.titre,articles.image_article,articles.descriptionn,articles.date_creation,categories.intitule_categorie From articles,categories where articles.id_categorie = categories.id_categorie ");
-$response2=$resultat2->execute(array());
+$resultat2=$base->prepare("SELECT articles.id_article,articles.titre,articles.descriptionn,articles.date_creation,articles.contenu,articles.image_article,categories.id_categorie,categories.intitule_categorie From articles,categories Where articles.id_categorie = categories.id_categorie AND id_article=?");
+$resultat2->execute(array($_GET['id_article']));
+$article = $resultat2->fetch();
 //  while($ligne = $resultat2->fetch())
 //  {
 // 	 echo "<pre>";
