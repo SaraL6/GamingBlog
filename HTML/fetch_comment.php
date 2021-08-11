@@ -13,7 +13,6 @@ ORDER BY comment_id DESC
 $statement = $connect->prepare($query);
 
 $statement->execute();
-
 $result = $statement->fetchAll();
 $output = '';
 // for each original comment in $result put it in $row then apply below code to each $row

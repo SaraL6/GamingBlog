@@ -2,13 +2,10 @@
 require_once '../source/db_connect.php';
 include_once '../source/session.php';
 
- 
 $requete=$base->prepare("SELECT * FROM categories");
 $requete->execute(array());
+$categories=$requete->fetchAll();
 
-$resultat2=$base->prepare("SELECT articles.id_article,articles.titre,articles.descriptionn,articles.date_creation,articles.contenu,articles.image_article,categories.id_categorie,categories.intitule_categorie From articles,categories Where articles.id_categorie = categories.id_categorie AND id_article=?");
-$resultat2->execute(array($_GET['id_article']));
-$article = $resultat2->fetch();
 
 
 
@@ -80,16 +77,16 @@ $article = $resultat2->fetch();
                     <ul class="main-menu primary-menu">
                         <li><a href="home.php">Home</a></li>
                         <li>
-                            <a href="games.php">Games</a>
+                            <a href="">Categories</a>
                             <ul class="sub-menu">
-                                <?php   while ($ligne=$requete->fetch()) { ?>
+                                <?php    while($categorie = array_shift($categories))  { ?>
 
-                                <li><a href="game-single.php"> <?php echo $ligne['intitule_categorie'] ?></a>
+                                <li><a href="categories.php?id_categorie=<?php  echo  $categorie["id_categorie"] ?>">
+                                        <?php echo $categorie['intitule_categorie'] ?></a>
 
                                 </li>
 
                                 <?php  } ?>
-
                             </ul>
                         </li>
                         <li><a href="about.php">About</a></li>

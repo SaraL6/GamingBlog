@@ -2,14 +2,13 @@
 require_once '../source/db_connect.php';
 include_once '../source/session.php';
 
- 
 $requete=$base->prepare("SELECT * FROM categories");
 $requete->execute(array());
 
-$resultat2=$base->prepare("SELECT articles.id_article,articles.titre,articles.image_article,articles.descriptionn,articles.date_creation,categories.intitule_categorie From articles,categories where articles.id_categorie = categories.id_categorie ");
+$resultat2=$base->prepare("SELECT * From articles JOIN categories on articles.id_categorie = categories.id_categorie");
 $resultat2->execute(array());
-$article = $resultat2->fetch();
-echo '<pre>', print_r($article, true) ,'</pre>';
+
+$rows = $resultat2->fetchAll();
 
 
 
@@ -72,7 +71,7 @@ echo '<pre>', print_r($article, true) ,'</pre>';
                 <a href="home.html" class="site-logo">
                     <img src="./img/logo.png" alt="" />
                 </a>
-                <nav class="top-nav-area w-100">
+                <nav class="top-nav-area w-100 ">
                     <div class="user-panel">
                         <?php if(isset($_SESSION['username'])) { ?>
                         <a href="../user/profile.php"><?php echo $_SESSION['username']?><a href=""></a>
@@ -85,11 +84,11 @@ echo '<pre>', print_r($article, true) ,'</pre>';
                     <ul class="main-menu primary-menu">
                         <li><a href="home.php">Home</a></li>
                         <li>
-                            <a href="games.php">Games</a>
+                            <a href="">Categories</a>
                             <ul class="sub-menu">
                                 <?php   while ($ligne=$requete->fetch()) { ?>
 
-                                <li><a href="game-single.php?id_categorie=<?php  echo  $ligne["id_categorie"] ?>">
+                                <li><a href="categories.php?id_categorie=<?php  echo  $ligne["id_categorie"] ?>">
                                         <?php echo $ligne['intitule_categorie'] ?></a>
 
                                 </li>
@@ -143,18 +142,18 @@ echo '<pre>', print_r($article, true) ,'</pre>';
     <section class="intro-section">
         <div class="container">
             <div class="row">
-                <?php   while ($ligne=$resultat2->fetch()) { ?>
+                <?php    while($row = array_shift($rows)) { ?>
                 <div class="col-md-4">
 
                     <div class="intro-text-box text-box text-white">
 
-                        <div class="top-meta"><?php  echo  $ligne["date_creation"] ?>/ in <a
-                                href=""><?php  echo  $ligne["intitule_categorie"] ?></a></div>
-                        <h3><?php  echo  $ligne["titre"] ?></h3>
+                        <div class="top-meta"><?php  echo  $row["date_creation"] ?>/ in <a
+                                href=""><?php  echo  $row["intitule_categorie"] ?></a></div>
+                        <h3><?php  echo  $row["titre"] ?></h3>
                         <p>
-                            <?php  echo  $ligne["descriptionn"] ?>
+                            <?php  echo  $row["descriptionn"] ?>
                         </p>
-                        <a href="game-single.php?id_article=<?php  echo  $ligne["id_article"] ?>" class="read-more">Read
+                        <a href="game-single.php?id_article=<?php  echo  $row["id_article"] ?>" class="read-more">Read
                             More <img src="img/icons/double-arrow.png" alt="#" /></a><br>
                         <br>
 
