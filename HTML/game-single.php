@@ -5,11 +5,14 @@ include_once '../source/session.php';
 
 $requete=$base->prepare("SELECT * FROM categories");
 $requete->execute(array());
+$categories=$requete->fetchAll();
 
 // $resultat2=$base->prepare("SELECT * From articles AND categories Where articles.id_categorie AND categories.id_categorie=?");
 
-$resultat2=$base->prepare("SELECT * From articles  JOIN categories on articles.id_categorie = categories.id_categorie  Where articles.id_categorie=? ");
-$resultat2->execute(array($_GET['id_categorie']));
+$resultat2=$base->prepare("SELECT * From articles  JOIN categories on articles.id_categorie = categories.id_categorie  Where articles.id_article=? ");
+$resultat2->execute(array($_GET['id_article']));
+
+
 $article = $resultat2->fetch();
 
 //  echo '<pre>tehtr', print_r($article, true) ,'</pre>';
@@ -101,17 +104,19 @@ $article = $resultat2->fetch();
                     <ul class="main-menu primary-menu">
                         <li><a href="home.php">Home</a></li>
                         <li>
-                            <a href="games.php">Games</a>
+                            <a href="">Categories</a>
                             <ul class="sub-menu">
-                                <?php   while ($ligne=$requete->fetch()) { ?>
+                                <ul class="sub-menu">
+                                    <?php    while($categorie = array_shift($categories))  { ?>
 
-                                <li><a href="game-single.php?id_categorie=<?php  echo  $ligne["id_categorie"] ?>">
-                                        <?php echo $ligne['intitule_categorie'] ?></a>
+                                    <li><a
+                                            href="categories.php?id_categorie=<?php  echo  $categorie["id_categorie"] ?>">
+                                            <?php echo $categorie['intitule_categorie'] ?></a>
 
-                                </li>
+                                    </li>
 
-                                <?php  } ?>
-                            </ul>
+                                    <?php  } ?>
+                                </ul>
                         </li>
                         <li><a href="about.php">About</a></li>
                         <li><a href="blog.php">Blog</a></li>

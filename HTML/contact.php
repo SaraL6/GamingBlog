@@ -2,9 +2,9 @@
 require_once '../source/db_connect.php';
 include_once '../source/session.php';
 
- 
 $requete=$base->prepare("SELECT * FROM categories");
 $requete->execute(array());
+$categories=$requete->fetchAll();
 
 
 
@@ -77,12 +77,12 @@ $requete->execute(array());
                     <ul class="main-menu primary-menu">
                         <li><a href="home.php">Home</a></li>
                         <li>
-                            <a href="games.php">Games</a>
+                            <a href="">Categories</a>
                             <ul class="sub-menu">
-                                <?php   while ($ligne=$requete->fetch()) { ?>
+                                <?php    while($categorie = array_shift($categories))  { ?>
 
-                                <li><a href="game-single.php?id_categorie=<?php  echo  $ligne["id_categorie"] ?>">
-                                        <?php echo $ligne['intitule_categorie'] ?></a>
+                                <li><a href="categories.php?id_categorie=<?php  echo  $categorie["id_categorie"] ?>">
+                                        <?php echo $categorie['intitule_categorie'] ?></a>
 
                                 </li>
 

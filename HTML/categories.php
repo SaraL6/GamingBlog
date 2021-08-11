@@ -2,16 +2,30 @@
 require_once '../source/db_connect.php';
 include_once '../source/session.php';
 
-
 $requete=$base->prepare("SELECT * FROM categories");
 $requete->execute(array());
 $categories=$requete->fetchAll();
 
+$resultat2=$base->prepare("SELECT * From articles  JOIN categories on articles.id_categorie = categories.id_categorie  Where articles.id_categorie=? ");
+$resultat2->execute(array($_GET['id_categorie']));
+
+
+$rows = $resultat2->fetchAll();
+
+
+//  while($ligne = $resultat2->fetch())
+//  {
+// 	 echo "<pre>";
+// 	var_dump($ligne);
+// 	echo "</pre>";
+//  }
 
 
 
+ ?>
 
-?>
+
+
 
 
 <!DOCTYPE html>
@@ -19,15 +33,16 @@ $categories=$requete->fetchAll();
 
 <head>
     <title>EndGam - Gaming Magazine Template</title>
-    <meta charset="UTF-8" />
-    <meta name="description" content="EndGam Gaming Magazine Template" />
-    <meta name="keywords" content="endGam,gGaming, magazine, html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="description" content="EndGam Gaming Magazine Template">
+    <meta name="keywords" content="endGam,gGaming, magazine, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="shortcut icon" />
 
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i,900,900i" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/bootstrap.min.css" />
@@ -40,10 +55,12 @@ $categories=$requete->fetchAll();
     <!-- Main Stylesheets -->
     <link rel="stylesheet" href="css/style5.css" />
 
+
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
 </head>
 
 <body>
@@ -66,7 +83,7 @@ $categories=$requete->fetchAll();
             <div class="header-bar-warp d-flex">
                 <!-- site logo -->
                 <a href="home.html" class="site-logo">
-                    <img src="./img/logo.png" alt="" />
+                    <img src="./img/logo.png" alt="">
                 </a>
                 <nav class="top-nav-area w-100">
                     <div class="user-panel">
@@ -91,6 +108,7 @@ $categories=$requete->fetchAll();
                                 </li>
 
                                 <?php  } ?>
+
                             </ul>
                         </li>
                         <li><a href="about.php">About</a></li>
@@ -107,65 +125,100 @@ $categories=$requete->fetchAll();
     </header>
     <!-- Header section end -->
 
+
     <!-- Page top section -->
-    <section class="page-top-section set-bg" data-setbg="img/page-top-bg/2.jpg">
+    <section class="page-top-section set-bg" data-setbg="img/page-top-bg/3.jpg">
         <div class="page-info">
-            <h2>About</h2>
+            <h2>Blog</h2>
             <div class="site-breadcrumb">
                 <a href="">Home</a> /
-                <span>About</span>
+                <span>Blog</span>
             </div>
         </div>
     </section>
     <!-- Page top end-->
 
-    <!-- Review section -->
-    <section class="review-section">
+
+    <!-- Blog page -->
+    <section class="blog-page">
         <div class="container">
+            <div class="row">
+                <div class="col-xl-9 col-lg-8 col-md-7">
+                    <ul class="blog-filter">
+                        <?php   while ($ligne=$requete->fetch()) { ?>
 
-            <div class="review-item">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="review-pic">
-                            <img src="img/review/1.jpg" alt="" />
+                        <li><a href="#">
+                                <?php echo $ligne['intitule_categorie'] ?>
+                            </a>
+                        </li>
+                        <?php  } ?>
+
+                    </ul>
+
+                    <div class="big-blog-item">
+                        <?php   while($row = array_shift($rows)) { ?>
+
+                        <img src="<?php  echo  $row["image_article"] ?>" alt="" name=" image_article"
+                            class="blog-thumbnail w-100 h-75">
+                        <div class="blog-content text-box text-white">
+                            <div class="top-meta"> <?php  echo  $row["date_creation"] ?> in <a
+                                    href=""><?php  echo  $row["intitule_categorie"] ?></a>
+                            </div>
+                            <h3><?php  echo  $row["titre"] ?></h3>
+                            <p><?php  echo  $row["descriptionn"] ?></p>
+                            <a href="game-single.php?id_article=<?php  echo  $row["id_article"] ?>"
+                                class="read-more">Read More <img src="img/icons/double-arrow.png" alt="#" /></a><br>
+                            <br>
+                            <hr style="background-color: #d3d3d3">
                         </div>
+                        <?php   } ?>
+
                     </div>
-                    <div class="col-lg-8">
-                        <div class="review-content text-box text-white">
-                            <h3>About GG Zone</h3>
-                            <p>
-                                Hardcore gamers eat, drink, breathe and practically live their whole lives playing their
-                                favorite games. For the rest of us mortals, games are but an escape to other worlds.
-                                Games, from the simple to the complicated, have always served good entertainment value.
-                                They can also be a way of life–something to be treated with passionate interest, which
-                                can sometimes border on obsession.</p>
 
-                            <p>GG Zone gives you a healthy dose of balanced news and views on the latest games today.
-                                Whether you’re a gaming maniac, or you’re just the occasional gamer, playing a few
-                                rounds of solitaire on your mobile phone to pass the time while lining up at the bank,
-                                we would have something interesting for you to read or learn.</p>
+                </div>
+                <div class="col-xl-3 col-lg-4 col-md-5 sidebar">
+                    <div id="stickySidebar">
 
-                            <p>Reach for glory! Not the reset button!
-                            </p>
+
+                        <div class="widget-item">
+                            <div class="categories-widget">
+                                <h4 class="widget-title">categories</h4>
+                                <ul>
+                                    <?php   while($categorie = array_shift($categories)) { ?>
+
+                                    <li><a
+                                            href="game-single.php?id_categorie=<?php  echo  $categorie["id_categorie"] ?>">
+                                            <?php echo $categorie['intitule_categorie'] ?></a>
+
+                                    </li>
+                                    <?php  } ?>
+
+                                </ul>
+                            </div>
                         </div>
+
+
                     </div>
                 </div>
             </div>
+        </div>
     </section>
-    <!-- Review section end-->
+    <!-- Blog page end-->
+
+
 
 
     <!-- Footer section -->
     <footer class="footer-section">
         <div class="container">
             <div class="footer-left-pic">
-                <img src="img/footer-left-pic.png" alt="" />
+                <img src="img/footer-left-pic.png" alt="">
             </div>
             <div class="footer-right-pic">
-                <img src="img/footer-right-pic.png" alt="" />
+                <img src="img/footer-right-pic.png" alt="">
             </div>
             <a href="#" class="footer-logo">
-                <img src="./img/logo.png" alt="" />
+                <img src="./img/logo.png" alt="">
             </a>
             <ul class="main-menu footer-menu">
                 <li><a href="">Home</a></li>
@@ -181,12 +234,11 @@ $categories=$requete->fetchAll();
                 <a href="#"><i class="fa fa-dribbble"></i></a>
                 <a href="#"><i class="fa fa-behance"></i></a>
             </div>
-            <div class="copyright">
-                <a href="">Colorlib</a> 2018 @ All rights reserved
-            </div>
+            <div class="copyright"><a href="">Colorlib</a> 2018 @ All rights reserved</div>
         </div>
     </footer>
     <!-- Footer section end -->
+
 
     <!--====== Javascripts & Jquery ======-->
     <script src="js/jquery-3.2.1.min.js"></script>
@@ -196,6 +248,7 @@ $categories=$requete->fetchAll();
     <script src="js/jquery.sticky-sidebar.min.js"></script>
     <script src="js/jquery.magnific-popup.min.js"></script>
     <script src="js/main.js"></script>
+
 </body>
 
 </html>
