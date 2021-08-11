@@ -7,8 +7,8 @@ $requete->execute(array());
 
 $resultat2=$base->prepare("SELECT * From articles JOIN categories on articles.id_categorie = categories.id_categorie");
 $resultat2->execute(array());
-$article = $resultat2->fetch();
-// echo '<pre>', print_r($article, true) ,'</pre>';
+
+$rows = $resultat2->fetchAll();
 
 
 
@@ -142,18 +142,18 @@ $article = $resultat2->fetch();
     <section class="intro-section">
         <div class="container">
             <div class="row">
-                <?php   while ($ligne=$resultat2->fetch()) { ?>
+                <?php    while($row = array_shift($rows)) { ?>
                 <div class="col-md-4">
 
                     <div class="intro-text-box text-box text-white">
 
-                        <div class="top-meta"><?php  echo  $ligne["date_creation"] ?>/ in <a
-                                href=""><?php  echo  $ligne["intitule_categorie"] ?></a></div>
-                        <h3><?php  echo  $ligne["titre"] ?></h3>
+                        <div class="top-meta"><?php  echo  $row["date_creation"] ?>/ in <a
+                                href=""><?php  echo  $row["intitule_categorie"] ?></a></div>
+                        <h3><?php  echo  $row["titre"] ?></h3>
                         <p>
-                            <?php  echo  $ligne["descriptionn"] ?>
+                            <?php  echo  $row["descriptionn"] ?>
                         </p>
-                        <a href="game-single.php?id_article=<?php  echo  $ligne["id_article"] ?>" class="read-more">Read
+                        <a href="game-single.php?id_article=<?php  echo  $row["id_article"] ?>" class="read-more">Read
                             More <img src="img/icons/double-arrow.png" alt="#" /></a><br>
                         <br>
 

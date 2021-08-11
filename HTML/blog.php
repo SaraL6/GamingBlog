@@ -4,6 +4,7 @@ include_once '../source/session.php';
 
 $requete=$base->prepare("SELECT * FROM categories");
 $requete->execute(array());
+$categories=$requete->fetchAll();
 
 $resultat2=$base->prepare("SELECT * From articles JOIN categories on articles.id_categorie = categories.id_categorie");
 $resultat2->execute(array());
@@ -78,7 +79,7 @@ $rows = $resultat2->fetchAll();
                 <a href="#"><i class="fa fa-dribbble"></i></a>
                 <a href="#"><i class="fa fa-behance"></i></a>
             </div>
-            <div class="header-bar-warp d-flex" style="display: none !important;">
+            <div class="header-bar-warp d-flex">
                 <!-- site logo -->
                 <a href="home.html" class="site-logo">
                     <img src="./img/logo.png" alt="">
@@ -181,13 +182,15 @@ $rows = $resultat2->fetchAll();
                             <div class="categories-widget">
                                 <h4 class="widget-title">categories</h4>
                                 <ul>
-                                    <?php   while ($ligne=$requete->fetch()) { ?>
+                                    <?php   while($categorie = array_shift($categories)) { ?>
 
-                                    <li><a href="game-single.php?id_categorie=<?php  echo  $ligne["id_categorie"] ?>">
-                                            <?php echo $ligne['intitule_categorie'] ?></a>
+                                    <li><a
+                                            href="game-single.php?id_categorie=<?php  echo  $categorie["id_categorie"] ?>">
+                                            <?php echo $categorie['intitule_categorie'] ?></a>
 
                                     </li>
                                     <?php  } ?>
+
                                 </ul>
                             </div>
                         </div>
