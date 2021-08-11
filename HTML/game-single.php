@@ -106,17 +106,16 @@ $article = $resultat2->fetch();
                         <li>
                             <a href="">Categories</a>
                             <ul class="sub-menu">
-                                <ul class="sub-menu">
-                                    <?php    while($categorie = array_shift($categories))  { ?>
 
-                                    <li><a
-                                            href="categories.php?id_categorie=<?php  echo  $categorie["id_categorie"] ?>">
-                                            <?php echo $categorie['intitule_categorie'] ?></a>
+                                <?php    while($categorie = array_shift($categories))  { ?>
 
-                                    </li>
+                                <li><a href="categories.php?id_categorie=<?php  echo  $categorie["id_categorie"] ?>">
+                                        <?php echo $categorie['intitule_categorie'] ?></a>
 
-                                    <?php  } ?>
-                                </ul>
+                                </li>
+
+                                <?php  } ?>
+                            </ul>
                         </li>
                         <li><a href="about.php">About</a></li>
                         <li><a href="blog.php">Blog</a></li>
