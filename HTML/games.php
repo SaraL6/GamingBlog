@@ -6,8 +6,12 @@ include_once '../source/session.php';
 $requete=$base->prepare("SELECT * FROM categories");
 $requete->execute(array());
 
-$resultat2=$base->prepare("SELECT articles.id_article,articles.titre,articles.image_article,articles.descriptionn,articles.date_creation,categories.intitule_categorie From articles,categories where articles.id_categorie = categories.id_categorie ");
-$response2=$resultat2->execute(array());
+
+$resultat2=$base->prepare("SELECT * From articles ");
+$resultat2->execute(array());
+$article = $resultat2->fetch();
+
+
 
 
 
@@ -88,12 +92,12 @@ $response2=$resultat2->execute(array());
                             <ul class="sub-menu">
                                 <?php   while ($ligne=$requete->fetch()) { ?>
 
-                                <li><a href="game-single.php"> <?php echo $ligne['intitule_categorie'] ?></a>
+                                <li><a href="game-single.php?id_categorie=<?php  echo  $ligne["id_categorie"] ?>">
+                                        <?php echo $ligne['intitule_categorie'] ?></a>
 
                                 </li>
 
                                 <?php  } ?>
-
                             </ul>
                         </li>
                         <li><a href="about.php">About</a></li>
@@ -129,108 +133,27 @@ $response2=$resultat2->execute(array());
     <!-- Games section -->
     <section class="games-section">
         <div class="container">
-            <ul class="game-filter">
-                <li><a href="">A</a></li>
-                <li><a href="">B</a></li>
-                <li><a href="">C</a></li>
-                <li><a href="">D</a></li>
-                <li><a href="">E</a></li>
-                <li><a href="">F</a></li>
-                <li><a href="">G</a></li>
-                <li><a href="">H</a></li>
-                <li><a href="">I</a></li>
-                <li><a href="">J</a></li>
-                <li><a href="">K</a></li>
-                <li><a href="">L</a></li>
-                <li><a href="">M</a></li>
-                <li><a href="">N</a></li>
-                <li><a href="">O</a></li>
-                <li><a href="">P</a></li>
-                <li><a href="">Q</a></li>
-                <li><a href="">R</a></li>
-                <li><a href="">S</a></li>
-                <li><a href="">T</a></li>
-                <li><a href="">U</a></li>
-                <li><a href="">V</a></li>
-                <li><a href="">W</a></li>
-                <li><a href="">X</a></li>
-                <li><a href="">Y</a></li>
-                <li><a href="">Z</a></li>
-            </ul>
+
             <div class="row">
                 <div class="col-xl-7 col-lg-8 col-md-7">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6">
-                            <div class="game-item">
-                                <img src="img/games/1.jpg" alt="#">
-                                <h5>Zombie Appocalipse 2</h5>
+                    <div class="d-flex align-items-center justify-content-between mb-5">
+                        <div class="row">
+                            <?php   while ($ligne=$resultat2->fetch()) { ?>
+                            <div class="col-lg-6 mb-2 pr-lg-1">
+
+                                <img src="<?php  echo  $ligne["image_article"] ?>" class="w-100 h-75" alt="#"
+                                    name="image_article">
+                                <h5 name="titre"><?php  echo  $ligne["titre"] ?></h5>
+                                <h6 name="titre" class="text-secondary"
+                                    class="img-fluid rounded shadow-sm img-thumbnail w-100 h-75">
+                                    <?php  echo  $ligne["descriptionn"] ?></h6>
                                 <a href="game-single.html" class="read-more">Read More <img
                                         src="img/icons/double-arrow.png" alt="#" /></a>
+                                </iv>
                             </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="game-item">
-                                <img src="img/games/2.jpg" alt="#">
-                                <h5>Dooms Day</h5>
-                                <a href="game-single.html" class="read-more">Read More <img
-                                        src="img/icons/double-arrow.png" alt="#" /></a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="game-item">
-                                <img src="img/games/3.jpg" alt="#">
-                                <h5>The Huricane</h5>
-                                <a href="game-single.html" class="read-more">Read More <img
-                                        src="img/icons/double-arrow.png" alt="#" /></a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="game-item">
-                                <img src="img/games/4.jpg" alt="#">
-                                <h5>Star Wars</h5>
-                                <a href="game-single.html" class="read-more">Read More <img
-                                        src="img/icons/double-arrow.png" alt="#" /></a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="game-item">
-                                <img src="img/games/5.jpg" alt="#">
-                                <h5>Candy land</h5>
-                                <a href="game-single.html" class="read-more">Read More <img
-                                        src="img/icons/double-arrow.png" alt="#" /></a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="game-item">
-                                <img src="img/games/6.jpg" alt="#">
-                                <h5>E.T.</h5>
-                                <a href="game-single.html" class="read-more">Read More <img
-                                        src="img/icons/double-arrow.png" alt="#" /></a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="game-item">
-                                <img src="img/games/7.jpg" alt="#">
-                                <h5>Zombie Appocalipse 2</h5>
-                                <a href="game-single.html" class="read-more">Read More <img
-                                        src="img/icons/double-arrow.png" alt="#" /></a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="game-item">
-                                <img src="img/games/8.jpg" alt="#">
-                                <h5>Dooms Day</h5>
-                                <a href="game-single.html" class="read-more">Read More <img
-                                        src="img/icons/double-arrow.png" alt="#" /></a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="game-item">
-                                <img src="img/games/9.jpg" alt="#">
-                                <h5>The Huricane</h5>
-                                <a href="game-single.html" class="read-more">Read More <img
-                                        src="img/icons/double-arrow.png" alt="#" /></a>
-                            </div>
+
+                            <?php  } ?>
+
                         </div>
                     </div>
                     <div class="site-pagination">
@@ -239,7 +162,7 @@ $response2=$resultat2->execute(array());
                         <a href="#">03.</a>
                     </div>
                 </div>
-                <div class="col-xl-3 col-lg-4 col-md-5 sidebar game-page-sideber">
+                <div class="col-xl-3 col-lg-2 col-md-5 sidebar game-page-sideber">
                     <div id="stickySidebar">
                         <div class="widget-item">
                             <div class="categories-widget">

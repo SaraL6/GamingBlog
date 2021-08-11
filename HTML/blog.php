@@ -2,13 +2,15 @@
 require_once '../source/db_connect.php';
 include_once '../source/session.php';
 
-  
 $requete=$base->prepare("SELECT * FROM categories");
 $requete->execute(array());
 
-$resultat2=$base->prepare("SELECT articles.id_article,articles.titre,articles.descriptionn,articles.date_creation,articles.contenu,articles.image_article,categories.id_categorie,categories.intitule_categorie From articles,categories Where articles.id_categorie = categories.id_categorie AND id_article=?");
-$resultat2->execute(array($_GET['id_article']));
-$article = $resultat2->fetch();
+$resultat2=$base->prepare("SELECT * From articles JOIN categories on articles.id_categorie = categories.id_categorie");
+$resultat2->execute(array());
+
+$rows = $resultat2->fetchAll();
+
+
 //  while($ligne = $resultat2->fetch())
 //  {
 // 	 echo "<pre>";
@@ -76,7 +78,7 @@ $article = $resultat2->fetch();
                 <a href="#"><i class="fa fa-dribbble"></i></a>
                 <a href="#"><i class="fa fa-behance"></i></a>
             </div>
-            <div class="header-bar-warp d-flex">
+            <div class="header-bar-warp d-flex" style="display: none !important;">
                 <!-- site logo -->
                 <a href="home.html" class="site-logo">
                     <img src="./img/logo.png" alt="">
@@ -98,10 +100,10 @@ $article = $resultat2->fetch();
                             <ul class="sub-menu">
                                 <?php   while ($ligne=$requete->fetch()) { ?>
 
-                                <li><a href="game-single.php"> <?php echo $ligne['intitule_categorie'] ?></a>
+                                <li><a href="game-single.php?id_categorie=<?php  echo  $ligne["id_categorie"] ?>">
+                                        <?php echo $ligne['intitule_categorie'] ?></a>
 
                                 </li>
-
                                 <?php  } ?>
 
                             </ul>
@@ -151,17 +153,17 @@ $article = $resultat2->fetch();
                     </ul>
 
                     <div class="big-blog-item">
-                        <?php   while ($ligne=$resultat2->fetch()) { ?>
+                        <?php   while($row = array_shift($rows)) { ?>
 
-                        <img src="<?php  echo  $ligne["image_article"] ?>" alt="" name=" image_article"
+                        <img src="<?php  echo  $row["image_article"] ?>" alt="" name=" image_article"
                             class="blog-thumbnail w-100 h-75">
                         <div class="blog-content text-box text-white">
-                            <div class="top-meta"> <?php  echo  $ligne["date_creation"] ?> in <a
-                                    href=""><?php  echo  $ligne["intitule_categorie"] ?></a>
+                            <div class="top-meta"> <?php  echo  $row["date_creation"] ?> in <a
+                                    href=""><?php  echo  $row["intitule_categorie"] ?></a>
                             </div>
-                            <h3><?php  echo  $ligne["titre"] ?></h3>
-                            <p><?php  echo  $ligne["descriptionn"] ?></p>
-                            <a href="game-single.php?id_article=<?php  echo  $ligne["id_article"] ?>"
+                            <h3><?php  echo  $row["titre"] ?></h3>
+                            <p><?php  echo  $row["descriptionn"] ?></p>
+                            <a href="game-single.php?id_article=<?php  echo  $row["id_article"] ?>"
                                 class="read-more">Read More <img src="img/icons/double-arrow.png" alt="#" /></a><br>
                             <br>
                             <hr style="background-color: #d3d3d3">
@@ -169,41 +171,28 @@ $article = $resultat2->fetch();
                         <?php   } ?>
 
                     </div>
-                    <div class="site-pagination">
-                        <a href="#" class="active">01.</a>
-                        <a href="#">02.</a>
-                        <a href="#">03.</a>
-                    </div>
+
                 </div>
                 <div class="col-xl-3 col-lg-4 col-md-5 sidebar">
                     <div id="stickySidebar">
-                        <div class="widget-item">
-                            <form class="search-widget" method="POST">
-                                <input type="text" name="search">
-                                <button> search</button>
-                            </form>
-                        </div>
+
 
                         <div class="widget-item">
                             <div class="categories-widget">
                                 <h4 class="widget-title">categories</h4>
                                 <ul>
+                                    <?php   while ($ligne=$requete->fetch()) { ?>
 
-                                    <li><a href="">Games</a></li>
-                                    <li><a href="">Gaming Tips & Tricks</a></li>
-                                    <li><a href="">Online Games</a></li>
-                                    <li><a href="">Team Games</a></li>
-                                    <li><a href="">Community</a></li>
-                                    <li><a href="">Uncategorized</a></li>
+                                    <li><a href="game-single.php?id_categorie=<?php  echo  $ligne["id_categorie"] ?>">
+                                            <?php echo $ligne['intitule_categorie'] ?></a>
+
+                                    </li>
+                                    <?php  } ?>
                                 </ul>
                             </div>
                         </div>
 
-                        <div class="widget-item">
-                            <a href="#" class="add">
-                                <img src="./img/add.jpg" alt="">
-                            </a>
-                        </div>
+
                     </div>
                 </div>
             </div>

@@ -6,9 +6,7 @@ include_once '../source/session.php';
 $requete=$base->prepare("SELECT * FROM categories");
 $requete->execute(array());
 
-$resultat2=$base->prepare("SELECT articles.id_article,articles.titre,articles.descriptionn,articles.date_creation,articles.contenu,articles.image_article,categories.id_categorie,categories.intitule_categorie From articles,categories Where articles.id_categorie = categories.id_categorie AND id_article=?");
-$resultat2->execute(array($_GET['id_article']));
-$article = $resultat2->fetch();
+
 
 
 
@@ -86,12 +84,12 @@ $article = $resultat2->fetch();
                             <ul class="sub-menu">
                                 <?php   while ($ligne=$requete->fetch()) { ?>
 
-                                <li><a href="game-single.php"> <?php echo $ligne['intitule_categorie'] ?></a>
+                                <li><a href="game-single.php?id_categorie=<?php  echo  $ligne["id_categorie"] ?>">
+                                        <?php echo $ligne['intitule_categorie'] ?></a>
 
                                 </li>
 
                                 <?php  } ?>
-
                             </ul>
                         </li>
                         <li><a href="about.php">About</a></li>

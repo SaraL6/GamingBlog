@@ -5,7 +5,7 @@ include_once '../source/session.php';
 $requete=$base->prepare("SELECT * FROM categories");
 $requete->execute(array());
 
-$resultat2=$base->prepare("SELECT * From articles  JOIN categories on articles.id_categorie = categories.id_categorie  Where articles.id_categorie=? ");
+$resultat2=$base->prepare("SELECT * From articles JOIN categories on articles.id_categorie = categories.id_categorie");
 $resultat2->execute(array());
 $article = $resultat2->fetch();
 // echo '<pre>', print_r($article, true) ,'</pre>';
