@@ -30,15 +30,16 @@ if($error == '')
 {
  $query = "
  INSERT INTO tbl_comment 
- (parent_comment_id, comment, comment_sender_name) 
- VALUES (:parent_comment_id, :comment, :comment_sender_name)
+ (parent_comment_id, comment, username, id_article) 
+ VALUES (:parent_comment_id, :comment, :username, :id_article)
  ";
  $statement = $connect->prepare($query);
  $statement->execute(
   array(
    ':parent_comment_id' => $_POST["comment_id"],
    ':comment'    => $comment_content,
-   ':comment_sender_name' => $comment_name
+   ':username' => $comment_name,
+   ':id_article' => $_POST["id_article"]
   )
  );
  $error = '<label class="text-success">Comment Added</label>';

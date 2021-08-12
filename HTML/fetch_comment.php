@@ -1,12 +1,14 @@
 <?php
 
+// echo "article_Id".$_POST['articleId'];
+$articleId= ($_POST['articleId']);
 //fetch_comment.php
 
 $connect = new PDO('mysql:host=localhost;dbname=gamingblog', 'root', '');
 // select all original comments
 $query = "
 SELECT * FROM tbl_comment 
-WHERE parent_comment_id = '0' 
+WHERE parent_comment_id = '0'  AND id_article= '$articleId'
 ORDER BY comment_id DESC
 ";
 
@@ -14,6 +16,8 @@ $statement = $connect->prepare($query);
 
 $statement->execute();
 $result = $statement->fetchAll();
+
+
 $output = '';
 // for each original comment in $result put it in $row then apply below code to each $row
 foreach($result as $row)
@@ -22,7 +26,7 @@ foreach($result as $row)
     //we're looping through each comment and putting its info in the html to set it up how we want it to look like in the comment section
  $output .= '
  <div class="panel panel-default">
-  <div class="panel-heading">By <b>'.$row["comment_sender_name"].'</b> on <i>'.$row["date"].'</i></div>
+  <div class="panel-heading">By <b>'.$row["username"].'</b> on <i>'.$row["date"].'</i></div>
   <div class="panel-body">'.$row["comment"].'</div>
   <div class="panel-footer" align="right"><button type="button" class="btn btn-light reply" id="'.$row["comment_id"].'">Reply</button></div>
  </div>
@@ -67,7 +71,7 @@ function get_reply_comment($connect, $parent_id = 0, $marginleft = 0)
   {
    $output .= '
    <div class="panel panel-default" style="margin-left:'.$marginleft.'px">
-    <div class="panel-heading">By <b>'.$row["comment_sender_name"].'</b> on <i>'.$row["date"].'</i></div>
+    <div class="panel-heading">By <b>'.$row["username"].'</b> on <i>'.$row["date"].'</i></div>
     <div class="panel-body">'.$row["comment"].'</div>
     <div class="panel-footer" align="right"><button type="button" class="btn btn-light reply" id="'.$row["comment_id"].'">Reply</button></div>
    </div>

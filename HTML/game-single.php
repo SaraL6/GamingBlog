@@ -215,6 +215,8 @@ $article = $resultat2->fetch();
                 <div class="form-group">
                     <!-- value 0 means no parent comment, value=value of the parent comment(comment_id) -->
                     <input type="hidden" name="comment_id" id="comment_id" value="0" />
+                    <input type="hidden" name="id_article" id="id_article"
+                        value="<?php  echo  $article["id_article"] ?>" />
                     <input type="submit" name="submit" id="submit" class="btn btn-info" value="Submit" />
                 </div>
             </form>
@@ -279,28 +281,29 @@ $article = $resultat2->fetch();
 <script>
 // wait for the document to be loaded
 $(document).ready(function() {
-
+    const articleId = <?php  echo  $article["id_article"] ?>;
     // when you click submit btn of comment_form apply function
     $('#comment_form').on('submit', function(event) {
 
         // prevent the submit btn from refreshing
         event.preventDefault();
-
+        console.log($(this));
         // convert the form data into as string so it can be sent with ajax
         // we take whatever is inside the form tag turn it into a string
         var form_data = $(this).serialize();
 
+
         $.ajax({
-            // point to ajax which code its gonna send the form_data to
+            // send form_data to add_comment.php and execute its code
             url: "add_comment.php",
             method: "POST",
             data: form_data,
-            dataType: "JSON",
+            dataType: 'JSON',
             // once the code in  add_comment.php is executed:
             success: function(data) {
-                console.log({
-                    data
-                })
+                // console.log({
+                //     data
+                // })
                 // accessing error that's inside data 
                 // != opposite of ==
                 if (data.error != '') {
@@ -316,12 +319,16 @@ $(document).ready(function() {
         })
     });
 
-    load_comment();
+    load_comment(articleId);
 
-    function load_comment() {
+    function load_comment(articleId) {
         $.ajax({
             url: "fetch_comment.php",
+
             method: "POST",
+            data: {
+                articleId: articleId
+            },
             success: function(data) {
                 $('#display_comment').html(data);
             }
