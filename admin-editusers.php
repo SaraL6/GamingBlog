@@ -7,14 +7,13 @@ if(isset($_POST['editusers-btn'])){
     $nom=$_POST['nom'];
     $prenom=$_POST['prenom'];
     $email=$_POST['email'];
-    $password=$_POST['password'];
     $id_role = $_POST['id_role'] ; 
     $id_user = $_POST["id_user"];
 
     $hashed_password= password_hash($password,PASSWORD_DEFAULT);
 	
-    $requete=$base->prepare("UPDATE utilisateurs SET username=?,nom=?,prenom=?,email=?,password=?, id_role=? WHERE id_user=?");
-    $resultat=$requete->execute(array( $username,$nom,$prenom,$email,$hashed_password,$id_role,$id_user));
+    $requete=$base->prepare("UPDATE utilisateurs SET username=?,nom=?,prenom=?,email=?, id_role=? WHERE id_user=?");
+    $resultat=$requete->execute(array( $username,$nom,$prenom,$email,$id_role,$id_user));
     //echo '<pre> update : ', print_r($resultat) ,'</pre>';
     header('Location:admin-listusers.php');
 
@@ -119,8 +118,6 @@ $ligne2=$requete3->fetch();
                 <br>
                 <input type="email" name="email" class="inputarea" placeholder="Email"
                     value="<?php  echo $ligne2["email"] ?>" /><br>
-                <br>
-                <input type="password" name="password" class="inputarea" placeholder="Password" /><br>
                 <br>
 
                 <input type="text" name="id_role" class="inputarea" placeholder="Role"
