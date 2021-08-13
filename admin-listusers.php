@@ -80,7 +80,7 @@ $reponse=$resultat->execute(array($_SESSION['id_user']));
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="admin-listarticles.php">
                         <span>List of articles</span>
                     </a>
                 </li>

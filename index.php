@@ -1,3 +1,70 @@
+<?php
+require_once 'source/session.php';
+require_once 'source/db_connect.php';
+
+
+if(isset($_POST['login-btn'])){
+    $user=$_POST['username'];
+    $password=$_POST['password'];
+
+    
+    try{
+        $requete=$base->prepare("SELECT * FROM utilisateurs WHERE username= :username ");
+        $result= $requete->execute(array(':username'=>$user));
+      
+        while($row = $requete->fetch()){
+            $id_user=$row['id_user'];
+            $hashed_password=$row['password'];
+            $username=$row['username'];
+            $id_role=$row['id_role'];
+
+            if(password_verify($password,$hashed_password) && ($id_role=="1") ){
+                $_SESSION['id_user']=$id_user;
+                $_SESSION['username']=$username;
+               
+                    header("Location:index2.php");
+
+              
+            }else if(password_verify($password,$hashed_password)  && ($id_role=="2")){
+                $_SESSION['id_user']=$id_user;
+                $_SESSION['username']=$username;
+                
+                header("Location:user/profile.php");
+            }
+            else{
+                echo"Invalid Username or Password, Please try again";
+            }
+        
+        }
+    }
+    catch(Exception $e){
+        echo "Error";
+    }
+}
+
+if(isset($_POST['signup-btn'])){
+        $username=$_POST['username'];
+        $nom=$_POST['nom'];
+        $prenom=$_POST['prenom'];
+        $email=$_POST['email'];
+        $password=$_POST['password'];
+        $id_role = 2 ; 
+        $hashed_password= password_hash($password,PASSWORD_DEFAULT);
+
+    try{
+        $requete =$base->prepare("INSERT INTO utilisateurs(username,nom,prenom,email,password,id_role) Values(:username,:nom,:prenom,:email,:password,:id_role)");
+        $result=$requete->execute(array(':username'=>$username,':nom'=>$nom,':prenom'=>$prenom,':email'=>$email,':password'=>$hashed_password,':id_role'=>$id_role));
+
+        if($requete->rowCount() == 1){
+            $result= header('Location:index.php');
+        }
+    }
+    catch(Exception $e){
+        echo "La creation de compte a échouée";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,7 +87,7 @@
         </div>
         <div id="left-form" class="form fade-in-element">
             <h1>Login</h1>
-            <form action="login.php" method="post">
+            <form action="index.php" method="post">
                 <input type="text" name="username" class="input-box" placeholder="User Name" />
                 <input type="password" name="password" class="input-box" placeholder="Password" />
                 <input type="submit" name="login-btn" class="btn" value="Login" />
@@ -39,7 +106,7 @@
         </div>
         <div id="right-form" class="form form-hide">
             <h1>Signup</h1>
-            <form action="signup.php" method="post">
+            <form action="index.php" method="post">
                 <input type="text" name="username" class="input-box" placeholder="Username" />
                 <input type="text" name="nom" class="input-box" placeholder="Last Name" />
 

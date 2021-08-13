@@ -14,7 +14,6 @@ include_once 'source/session.php';
   
 $resultat=$base->prepare("SELECT *  From articles,utilisateurs where id_user = ? AND id_role = 1");
 $reponse=$resultat->execute(array($_SESSION['id_user']));
-     echo '<pre> article : ', print_r($reponse) ,'</pre>';
 
 ?>
 
@@ -34,7 +33,7 @@ $reponse=$resultat->execute(array($_SESSION['id_user']));
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/stylex?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/stylex.css?v=<?php echo time(); ?>">
 
 
 
