@@ -1,6 +1,6 @@
 <?php
 
-// echo "article_Id".$_POST['articleId'];
+
 $articleId= ($_POST['articleId']);
 //fetch_comment.php
 

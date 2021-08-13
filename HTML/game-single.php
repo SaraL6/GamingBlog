@@ -280,11 +280,13 @@ $article = $resultat2->fetch();
 </html>
 <script>
 // wait for the document to be loaded
+
 $(document).ready(function() {
     const articleId = <?php  echo  $article["id_article"] ?>;
+
     // when you click submit btn of comment_form apply function
     $('#comment_form').on('submit', function(event) {
-
+        // console.log('article id submit' + articleId);
         // prevent the submit btn from refreshing
         event.preventDefault();
         console.log($(this));
@@ -313,15 +315,19 @@ $(document).ready(function() {
                     $('#comment_message').html(data.error);
                     // we set the value of the hidden input back to 0
                     $('#comment_id').val('0');
-                    load_comment();
+
                 }
+                load_comment();
             }
         })
     });
 
-    load_comment(articleId);
 
-    function load_comment(articleId) {
+    load_comment();
+
+
+    function load_comment() {
+        // console.log('article id 2 ' + articleId);
         $.ajax({
             url: "fetch_comment.php",
 
@@ -331,6 +337,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 $('#display_comment').html(data);
+
             }
         })
     }
