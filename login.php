@@ -24,7 +24,7 @@ require_once 'source/db_connect.php';
                         header("Location:index2.php");
 
                   
-                }else if(password_verify($password,$hashed_password) && ($_SESSION['username']!="saralachgar")){
+                }else if(password_verify($password,$hashed_password) && ($_SESSION['username']!=="saralachgar")){
                     $_SESSION['id_user']=$id_user;
                     $_SESSION['username']=$username;
                     
